@@ -60,7 +60,7 @@ if (os.platform() == "win32") {
 } else if (os.platform() == "linux") {
   var root = "/home/" + require("os").userInfo().username + "/.minecraft";
 } else if (os.platform() == "darwin") {
-  var root = require("os").userInfo().username + "Library/Application Support/minecraft";
+  var root = "/Users/" + require("os").userInfo().username + "/Library/Application Support/minecraft";
 }
 
 if (!fs.existsSync(root)) {
@@ -171,6 +171,7 @@ function MsLogin() {
         $("#loader").hide();
         console.log("We failed to log someone in because : " + reason);
         console.log(result.reason);
+        console.log(reason);
         return;
       } else {
         opts.authorization = msmc.getMCLC().getAuth(result);
@@ -1084,9 +1085,15 @@ async function downloadJre(ver) {
             fs.readdir(dir, (err, files) => {
               files.forEach(file => {
                 if (fs.lstatSync(dir + file).isDirectory()) {
-                  fs.renameSync(dir + file, dir + "jre" + ver);
+                  if(os.platform() == "darwin") {
+                    fs.renameSync(dir + file, dir + "jre-temp" + ver);
+                  }
                 }
               });
+              if(os.platform() == "darwin") {
+                fs.renameSync(dir + "jre-temp" + ver + "/Contents/Home", dir + "jre" + ver)
+                fs.rmSync(dir + "jre-temp" + ver, { recursive: true, force: true });
+              }
             });
 
             setTimeout(() => resolve('downloaded jre' + ver), 1000);

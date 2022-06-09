@@ -5,8 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder",
-    "start": "nw"
+    "dist": "electron-builder"
   },
   "author": "NickNickerYT <nick4nicker@gmail.com>",
   "license": "MIT",

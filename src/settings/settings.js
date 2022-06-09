@@ -30,8 +30,14 @@ nconf.load();
 if(nconf.get("javaPath") != "undefined" && nconf.get("javaPath") != undefined){
   document.getElementById('java').value = nconf.get("javaPath");
 }
-document.getElementById('mem_min').value = nconf.get("mem_min");
-document.getElementById('mem_max').value = nconf.get("mem_max");
+
+var mem_min = nconf.get("mem_min") ? null : "domyślnie";
+var mem_max = nconf.get("mem_max") ? null : "domyślnie";
+var javaPath = nconf.get("javaPath") ? null : "wbudowana";
+
+document.getElementById('java').value = javaPath;
+document.getElementById('mem_min').value = mem_min;
+document.getElementById('mem_max').value = mem_max;
 
 
 function doWin (action) {
